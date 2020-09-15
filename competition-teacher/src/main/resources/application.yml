@@ -1,0 +1,9 @@
+server:
+  port: 8103
+spring:
+  application:
+    name: teacher
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.97.237.248:8848

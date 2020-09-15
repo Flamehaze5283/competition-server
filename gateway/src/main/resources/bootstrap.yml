@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.97.237.248:8848
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: admin
+          uri: lb://admin
+          predicates:
+            - Path=/ums-user/**
