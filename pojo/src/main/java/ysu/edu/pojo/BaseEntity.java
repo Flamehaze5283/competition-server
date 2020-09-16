@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-public class BaseEntry {
+public class BaseEntity {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
