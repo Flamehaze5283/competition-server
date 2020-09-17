@@ -13,6 +13,7 @@
         <module>AutoCode</module>
         <module>gateway</module>
         <module>pojo</module>
+        <module>ImgServer</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -30,6 +31,10 @@
         <freemarker.version>2.3.30</freemarker.version>
         <jwt.version>3.10.3</jwt.version>
         <common.version>6.0.0</common.version>
+        <fastdfs.version>1.27.2</fastdfs.version>
+        <oss.version>3.10.2</oss.version>
+        <swagger.version>2.9.2</swagger.version>
+        <self.version>1.0-SNAPSHOT</self.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -103,6 +108,39 @@
                 <artifactId>common</artifactId>
                 <version>${common.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>ysu.edu</groupId>
+                <artifactId>pojo</artifactId>
+                <version>${self.version}</version>
+            </dependency>
+
+            <!-- fastDFS 图片服务器 -->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fastdfs.version}</version>
+            </dependency>
+
+            <!-- oss 阿里图片服务器 -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${oss.version}</version>
+            </dependency>
+
+            <!-- 接口文档生成 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
         </dependencies>
+
     </dependencyManagement>
 </project>

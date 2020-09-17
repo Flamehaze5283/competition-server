@@ -1,0 +1,14 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: upload
+  profiles:
+    active: discovery, fastdfs
+  cloud:
+    nacos:
+      config:
+        server-addr: http://39.99.247.252:8848
+        file-extension: yml   #后最
+        prefix: cloud         #前缀
