@@ -1,9 +1,0 @@
-server:
-  port: 8102
-spring:
-  application:
-    name: student
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 39.97.237.248:8848

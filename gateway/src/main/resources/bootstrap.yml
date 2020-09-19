@@ -3,17 +3,11 @@ server:
 spring:
   application:
     name: gateway
+  profiles:
+    active: discovery, gateway, gateway-paths
   cloud:
     nacos:
-      discovery:
-        server-addr: 39.97.237.248:8848
-    gateway:
-      discovery:
-        locator:
-          lower-case-service-id: true
-          enabled: true
-      routes:
-        - id: admin
-          uri: lb://admin
-          predicates:
-            - Path=/ums-user/**
+      config:
+        server-addr: http://39.97.237.248:8848
+        file-extension: yml   #后最
+        prefix: ysu         #前缀
