@@ -29,6 +29,10 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ysu.edu</groupId>
+            <artifactId>pojo</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
