@@ -12,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-09-20
  */
 public interface IConstantItemService extends IService<ConstantItem> {
-
+    Object list(ConstantItem constantItem);
+    boolean add(ConstantItem constantItem);
+    boolean batchdel(Integer[] ids);
 }

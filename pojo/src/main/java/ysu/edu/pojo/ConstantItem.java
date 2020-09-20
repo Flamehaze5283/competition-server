@@ -1,5 +1,6 @@
 package ysu.edu.pojo;
 
+import lombok.experimental.Accessors;
 import ysu.edu.pojo.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 public class ConstantItem extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

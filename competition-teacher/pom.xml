@@ -37,5 +37,9 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ysu.edu</groupId>
+            <artifactId>BaseConfig</artifactId>
+        </dependency>
     </dependencies>
 </project>

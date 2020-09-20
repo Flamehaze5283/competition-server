@@ -35,6 +35,10 @@ public class ServerResponse {
         return new ServerResponse(state.getCode(), null, msg);
     }
 
+    public static ServerResponse failed(String msg) {
+        return new ServerResponse(ResponseState.FAILED.getCode(), null, msg);
+    }
+
     public int getCode() {
         return code;
     }
