@@ -1,5 +1,6 @@
 package ysu.edu.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -14,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IStudentService extends IService<Student> {
     boolean emailCheck(Email email, Integer stuId);
+    boolean updatePhoto(MultipartFile file, Integer stuId);
 }

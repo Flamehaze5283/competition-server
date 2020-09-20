@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import ysu.edu.service.IStudentService;
@@ -22,7 +23,7 @@ import javax.annotation.Resource;
  * @since 2020-09-20
  */
 @RestController
-@RequestMapping("/stu")
+@RequestMapping("/student")
 public class StudentController {
 
     @Resource
@@ -40,4 +41,10 @@ public class StudentController {
         else return ServerResponse.failed(ResponseState.FAILED, "邮件发送失败");
     }
 
+    @PostMapping("update-photo")
+    ServerResponse updatePhoto(MultipartFile file, Integer id) {
+        if(service.updatePhoto(file, id))
+            return ServerResponse.success(service.getById(id),"图片上传成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "图片上传失败");
+    }
 }

@@ -27,12 +27,12 @@ public class UploadController {
     @ApiOperation(value="上传图片到fastDFS", notes="上传图片，返回图片地址，点击try it out可以对接口进行测试", produces="application/json")
     @PostMapping("upload")
     ServerResponse upload(MultipartFile file) throws IOException {
-        return new ServerResponse(200, service.upload(file), "操作成功");
+        return ServerResponse.success(service.upload(file));
     }
 
     @ApiOperation(value="上传图片到OSS", notes="上传图片，最好不要用这个，要花钱的www", produces="application/json")
     @PostMapping("upload-oss")
     ServerResponse uploadOss(MultipartFile file) throws IOException {
-        return new ServerResponse(200, service.uploadOss(file), "操作成功");
+        return ServerResponse.success(service.uploadOss(file));
     }
 }
