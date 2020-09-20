@@ -1,0 +1,14 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: email
+  profiles:
+    active: discovery, email
+  cloud:
+    nacos:
+      config:
+        server-addr: http://39.97.237.248:8848
+        file-extension: yml   #后缀
+        prefix: ysu         #前缀

@@ -4,7 +4,7 @@ spring:
   application:
     name: student
   profiles:
-    active: discovery, datasource, mybatis
+    active: discovery, datasource, mybatis, ribbon
   cloud:
     nacos:
       config:

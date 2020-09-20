@@ -15,7 +15,7 @@ public class ServerResponse {
     @ApiModelProperty(example="data")
     private Object data;
     @ApiModelProperty(example="操作成功")
-    private String msg;
+    private String message;
 
     public static ServerResponse success(Object data) {
         ResponseState state = ResponseState.SUCCESS;
@@ -43,7 +43,7 @@ public class ServerResponse {
         return data;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 }

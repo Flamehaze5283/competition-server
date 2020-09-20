@@ -1,5 +1,6 @@
 package ysu.edu.service;
 
+import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2020-09-20
  */
 public interface IStudentService extends IService<Student> {
-
+    boolean emailCheck(Email email, Integer stuId);
 }

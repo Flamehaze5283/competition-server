@@ -14,6 +14,8 @@
         <module>gateway</module>
         <module>pojo</module>
         <module>ImgServer</module>
+        <module>email</module>
+        <module>BaseConfig</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -139,6 +141,13 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- 配置文件 -->
+            <dependency>
+                <groupId>ysu.edu</groupId>
+                <artifactId>BaseConfig</artifactId>
+                <version>${self.version}</version>
             </dependency>
         </dependencies>
 
