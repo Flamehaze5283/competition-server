@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-09-20
  */
 @RestController
-@RequestMapping("//constant-type")
+@RequestMapping("/constant-type")
 public class ConstantTypeController {
 
 }
