@@ -16,4 +16,34 @@ public class ServerResponse {
     private Object data;
     @ApiModelProperty(example="操作成功")
     private String msg;
+
+    public static ServerResponse success(Object data) {
+        ResponseState state = ResponseState.SUCCESS;
+        return new ServerResponse(state.getCode(), data, state.getMsg());
+    }
+
+    public static ServerResponse success(Object data, String msg) {
+        ResponseState state = ResponseState.SUCCESS;
+        return new ServerResponse(state.getCode(), data, msg);
+    }
+
+    public static ServerResponse failed(ResponseState state) {
+        return new ServerResponse(state.getCode(), null, state.getMsg());
+    }
+
+    public static ServerResponse failed(ResponseState state, String msg) {
+        return new ServerResponse(state.getCode(), null, msg);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
 }

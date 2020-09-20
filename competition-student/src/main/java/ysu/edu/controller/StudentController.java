@@ -27,7 +27,7 @@ public class StudentController {
 
     @GetMapping("info")
     ServerResponse info(Integer id) {
-        return new ServerResponse(200, service.getById(id), null);
+        return ServerResponse.success(service.getById(id));
     }
 
 }
