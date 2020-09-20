@@ -26,7 +26,7 @@ public class BaseEntity {
     // 每页大小
     @JsonIgnore
     @TableField(exist = false)
-    private int pageNum = 1;
+    private int pageNo = 1;
 
     // 是否分页  1分页 0不分
     @JsonIgnore

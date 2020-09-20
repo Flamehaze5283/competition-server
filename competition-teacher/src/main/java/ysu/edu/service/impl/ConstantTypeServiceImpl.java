@@ -32,7 +32,7 @@ public class ConstantTypeServiceImpl extends ServiceImpl<ConstantTypeMapper, Con
         }
         // 如果分页返回 IPage 如果不分页 返回 List
         if (constantType.getWithPage() == 1) {
-            return this.page(new Page<>(constantType.getPageNum(), constantType.getPageSize()), wrapper);
+            return this.page(new Page<>(constantType.getPageNo(), constantType.getPageSize()), wrapper);
         } else {
             return this.list(wrapper);
         }

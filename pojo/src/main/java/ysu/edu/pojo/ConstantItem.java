@@ -1,5 +1,6 @@
 package ysu.edu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.experimental.Accessors;
 import ysu.edu.pojo.BaseEntity;
 import java.time.LocalDateTime;
@@ -51,5 +52,9 @@ public class ConstantItem extends BaseEntity {
      */
     private LocalDateTime createtime;
 
-
+    /**
+     * 类别名
+     */
+    @TableField(exist = false)
+    private String typeName;
 }

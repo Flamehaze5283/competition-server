@@ -4,7 +4,7 @@ spring:
   application:
     name: teacher
   profiles:
-    active: discovery
+    active: discovery, datasource, mybatis, ribbon
   cloud:
     nacos:
       config:

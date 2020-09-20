@@ -34,12 +34,14 @@ public class ConstantItemServiceImpl extends ServiceImpl<ConstantItemMapper, Con
 
         // 如果分页返回 IPage 如果不分页 返回 List
         if(constantItem.getWithPage() == 1) {
+            System.out.println("进入withPage");
             if(StringUtils.isNotBlank(constantItem.getName())) {
                 wrapper.like("t.`name`",constantItem.getName());
             }
-            return getBaseMapper().list(new Page<>(constantItem.getPageNum(),constantItem.getPageSize()),wrapper);
+            return getBaseMapper().list(new Page<>(constantItem.getPageNo(),constantItem.getPageSize()),wrapper);
 
         } else {
+            System.out.println("未进入withPage");
             if(StringUtils.isNotBlank(constantItem.getName())) {
                 wrapper.like("name",constantItem.getName());
             }
