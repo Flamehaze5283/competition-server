@@ -12,11 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UploadServiceImpl implements IUploadService {
+
+    private static final String[] list = {
+            "image/jpeg",
+            "image/png",
+            "image/bmp",
+    };
 
     @Resource
     FastFileStorageClient fastClient;
@@ -25,6 +30,10 @@ public class UploadServiceImpl implements IUploadService {
     public String upload(MultipartFile file) throws IOException {
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
+        System.out.println(file.getContentType());
+        if(!Arrays.asList(list).contains(file.getContentType())) {
+            return null;
+        }
         FastImageFile image = new FastImageFile(
                 file.getInputStream(),
                 file.getSize(),

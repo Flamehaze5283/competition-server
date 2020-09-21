@@ -27,7 +27,10 @@ public class UploadController {
     @ApiOperation(value="上传图片到fastDFS", notes="上传图片，返回图片地址，点击try it out可以对接口进行测试", produces="application/json")
     @PostMapping("upload")
     ServerResponse upload(MultipartFile file) throws IOException {
-        return ServerResponse.success(service.upload(file));
+        String filePath = service.upload(file);
+        if(filePath != null)
+            return ServerResponse.success(filePath);
+        else return ServerResponse.failed("图片格式不正确，请上传png/jpg/bmp");
     }
 
     @ApiOperation(value="上传图片到OSS", notes="上传图片，最好不要用这个，要花钱的www", produces="application/json")

@@ -17,6 +17,8 @@ import ysu.edu.service.IStudentService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import ysu.edu.util.JWTUtil;
+import ysu.edu.util.ResponseState;
+import ysu.edu.util.ServerResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +58,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Override
     public boolean updatePhoto(MultipartFile file, Integer stuId) {
-        String imgPath = (String)imageService.uploadImage(file).getData();
+        ServerResponse response = imageService.uploadImage(file);
+        if(response.getCode() != ResponseState.SUCCESS.getCode())
+            return false;
+        String imgPath = (String)response.getData();
         Student student = new Student();
         student.setPhoto(imgPath);
         student.setId(stuId);
