@@ -1,5 +1,6 @@
 package ysu.edu.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import ysu.edu.pojo.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -72,6 +73,7 @@ public class Competition extends BaseEntity {
     /**
      * 竞赛创建时间
      */
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") // 时间格式化
     private LocalDateTime createTime;
 
     /**
