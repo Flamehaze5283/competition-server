@@ -38,6 +38,9 @@ public class ServerResponse {
     public static ServerResponse failed(String msg) {
         return new ServerResponse(ResponseState.FAILED.getCode(), null, msg);
     }
+    public static ServerResponse notoken(){
+        return new ServerResponse(ResponseState.NO_SESSION.getCode(),null,ResponseState.NO_SESSION.getMsg());
+    }
 
     public int getCode() {
         return code;

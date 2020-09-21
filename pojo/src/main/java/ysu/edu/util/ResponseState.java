@@ -1,6 +1,7 @@
 package ysu.edu.util;
 
 public enum ResponseState {
+
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     NO_SESSION(401, "未登录或登录超时"),
