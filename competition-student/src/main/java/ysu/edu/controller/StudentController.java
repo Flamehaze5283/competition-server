@@ -39,7 +39,6 @@ public class StudentController {
         return ServerResponse.success(service.getById(id));
     }
 
-
     @PostMapping("email-check")
     ServerResponse emailCheck(Email email, Integer stuId) {
         if(service.emailCheck(email, stuId))
@@ -70,5 +69,33 @@ public class StudentController {
     @PostMapping("logout")
     ServerResponse logout(HttpServletRequest request){
         return ServerResponse.success(studentService.logout(request));
+    }
+
+    @PostMapping("checkPassword")
+    ServerResponse checkPassword(Integer stuId, String oldPassword) {
+        if(service.checkPassword(stuId, oldPassword))
+            return ServerResponse.success(true,"密码正确");
+        else return ServerResponse.failed(ResponseState.FAILED, "密码错误");
+    }
+
+    @PostMapping("changePassword")
+    ServerResponse changePassword(Integer stuId, String oldPassword, String newPassword) {
+        if(service.changePassword(stuId, oldPassword, newPassword))
+            return ServerResponse.success(null,"密码修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "密码修改失败");
+    }
+
+    @PostMapping("changeEmail")
+    ServerResponse changeEmail(Integer stuId, String oldPassword, String newEmail) {
+        if(service.changeEmail(stuId, oldPassword, newEmail))
+            return ServerResponse.success(null,"邮箱修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败");
+    }
+
+    @PostMapping("changeTel")
+    ServerResponse changeTel(Integer stuId, String oldPassword, String newTel) {
+        if(service.changeTel(stuId, oldPassword, newTel))
+            return ServerResponse.success(null,"电话修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败");
     }
 }

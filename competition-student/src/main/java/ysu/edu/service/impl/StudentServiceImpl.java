@@ -108,6 +108,45 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return true;
     }
 
+    @Override
+    public boolean checkPassword(Integer stuId, String password) {
+        Student sqlStudent = getById(stuId);
+        return bCryptPasswordEncoder.matches(password, sqlStudent.getPassword());
+    }
+
+    @Override
+    public boolean changePassword(Integer stuId, String password, String newPassword) {
+        if(checkPassword(stuId, password)){
+            Student student = new Student();
+            student.setId(stuId);
+            student.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            return updateById(student);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean changeEmail(Integer stuId, String password, String newEmail) {
+        if(checkPassword(stuId, password)){
+            Student student = new Student();
+            student.setId(stuId);
+            student.setEmail(newEmail);
+            return updateById(student);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean changeTel(Integer stuId, String password, String newTel) {
+        if(checkPassword(stuId, password)){
+            Student student = new Student();
+            student.setId(stuId);
+            student.setTel(newTel);
+            return updateById(student);
+        }
+        return false;
+    }
+
     private  void write2SSDB(Student stu ,LocalDateTime now) throws JsonProcessingException {
         Map info = new HashMap<>();
         info.put("numId",stu.getNumId());

@@ -23,4 +23,8 @@ public interface IStudentService extends IService<Student> {
     String token(Student student) throws JsonProcessingException;
     Student information(String numId);
     boolean logout(HttpServletRequest request);
+    boolean checkPassword(Integer stuId, String password);
+    boolean changePassword(Integer stuId, String password, String newPassword);
+    boolean changeEmail(Integer stuId, String password, String newEmail);
+    boolean changeTel(Integer stuId, String password, String newTel);
 }
