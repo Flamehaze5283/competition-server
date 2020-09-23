@@ -2,6 +2,8 @@ package ysu.edu.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import ysu.edu.pojo.BaseEntity;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,12 +55,12 @@ public class Competition extends BaseEntity {
     /**
      * 报名开始时间
      */
-    private LocalDateTime startTime;
+    private LocalDate startTime;
 
     /**
      * 报名截止时间
      */
-    private LocalDateTime endTime;
+    private LocalDate endTime;
 
     /**
      * 可选组件属性(属性通过常数项与常数类维护)

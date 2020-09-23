@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICompetitionService extends IService<Competition> {
 
+    boolean add(Competition competition);
 }
