@@ -34,5 +34,4 @@ public class CompetitionController {
         else
             return ServerResponse.failed("保存失败");
     }
-
 }
