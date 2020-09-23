@@ -26,5 +26,8 @@ public interface IStudentService extends IService<Student> {
     boolean checkPassword(Integer stuId, String password);
     boolean changePassword(Integer stuId, String password, String newPassword);
     boolean changeEmail(Integer stuId, String password, String newEmail);
+
+    boolean changeEmail(String token);
+
     boolean changeTel(Integer stuId, String password, String newTel);
 }

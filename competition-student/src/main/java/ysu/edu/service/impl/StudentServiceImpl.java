@@ -111,7 +111,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public boolean checkPassword(Integer stuId, String password) {
         Student sqlStudent = getById(stuId);
-        return bCryptPasswordEncoder.matches(password, sqlStudent.getPassword());
+        return password != null && bCryptPasswordEncoder.matches(password, sqlStudent.getPassword());
     }
 
     @Override
@@ -130,10 +130,25 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         if(checkPassword(stuId, password)){
             Student student = new Student();
             student.setId(stuId);
+            student.setPassword(password);
             student.setEmail(newEmail);
-            return updateById(student);
+            Email email = new Email();
+            email.setTo(newEmail);
+            email.setSubject("燕山大学竞赛系统邮箱绑定验证");
+            String url = "http://localhost/verify-success?token=" + JWTUtil.emailToken(student);
+            email.setText(Email.a(url, url));
+            return emailService.sendEmail(email);
         }
         return false;
+    }
+    @Override
+    public boolean changeEmail(String token) {
+        Student student = JWTUtil.emailToken(token);
+        if(checkPassword(student.getId(), student.getPassword())) {
+            student.setPassword(null);
+            return updateById(student);
+        }
+        else return false;
     }
 
     @Override

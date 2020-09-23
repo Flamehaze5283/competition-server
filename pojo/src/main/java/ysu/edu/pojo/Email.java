@@ -10,4 +10,8 @@ public class Email {
     private String to;
     private String subject;
     private String text;
+
+    public static String a(String url, String text) {
+        return "<a href='" + url + "'>" + text + "</a>";
+    }
 }

@@ -87,9 +87,15 @@ public class StudentController {
 
     @PostMapping("changeEmail")
     ServerResponse changeEmail(Integer stuId, String oldPassword, String newEmail) {
-        if(service.changeEmail(stuId, oldPassword, newEmail))
-            return ServerResponse.success(null,"邮箱修改成功");
+        if( service.changeEmail(stuId, oldPassword, newEmail))
+            return ServerResponse.success(newEmail,"邮件发送成功，请前往验证");
         else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败");
+    }
+    @PostMapping("saveEmail")
+    ServerResponse changeEmail(String emailToken) {
+        if(service.changeEmail(emailToken))
+            return ServerResponse.success(null, "邮件修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败，邮件已经失效，请重新发送邮件");
     }
 
     @PostMapping("changeTel")
