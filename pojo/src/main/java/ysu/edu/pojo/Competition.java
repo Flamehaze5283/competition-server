@@ -1,6 +1,8 @@
 package ysu.edu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.BaseEntity;
 
 import java.time.LocalDate;
@@ -83,5 +85,23 @@ public class Competition extends BaseEntity {
      */
     private LocalDateTime updateTime;
 
+    /**
+     * 创建者姓名
+     * */
+    @TableField(exist = false)
+    private String teacherName;
 
+    /**
+     * 竞赛级别
+     * */
+    @TableField(exist = false)
+    private String levelName;
+    /**
+     * 竞赛类型
+     * */
+    @TableField(exist = false)
+    private String typeName;
+
+    @TableField(exist = false)
+    private MultipartFile fileImage;
 }

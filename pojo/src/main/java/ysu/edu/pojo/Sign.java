@@ -1,5 +1,6 @@
 package ysu.edu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import ysu.edu.pojo.BaseEntity;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -64,5 +65,14 @@ public class Sign extends BaseEntity {
      */
     private LocalDateTime updateTime;
 
-
+    /**
+     * 学生姓名
+     * */
+    @TableField(exist = false)
+    private String studentName;
+    /**
+     * 审核状态名
+     * */
+    @TableField(exist = false)
+    private String verifyName;
 }

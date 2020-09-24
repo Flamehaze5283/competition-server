@@ -45,5 +45,10 @@
             <groupId>ysu.edu</groupId>
             <artifactId>BaseConfig</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ysu.edu</groupId>
+            <artifactId>ImgServer</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
