@@ -5,15 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
+import ysu.edu.pojo.Competition;
 import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import ysu.edu.mapper.StudentMapper;
-import ysu.edu.service.IImageUploadService;
-import ysu.edu.service.IRedisService;
-import ysu.edu.service.ISendEmailService;
-import ysu.edu.service.IStudentService;
+import ysu.edu.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import ysu.edu.util.JWTUtil;
@@ -24,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +42,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
 
     @Autowired
     IImageUploadService imageService;
+
+    @Autowired
+    ICompeService iCompeService;
 
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -162,6 +165,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return false;
     }
 
+
+
     private  void write2SSDB(Student stu ,LocalDateTime now) throws JsonProcessingException {
         Map info = new HashMap<>();
         info.put("numId",stu.getNumId());
@@ -182,4 +187,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         stu.setLastLogin(now);
         updateById(stu);
     }
+
+
+
 }

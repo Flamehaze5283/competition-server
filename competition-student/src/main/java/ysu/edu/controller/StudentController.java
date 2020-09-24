@@ -2,6 +2,8 @@ package ysu.edu.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
+import ysu.edu.service.ICompeService;
 import ysu.edu.service.IStudentService;
 import ysu.edu.util.ResponseState;
 import ysu.edu.util.ServerResponse;
@@ -33,6 +36,8 @@ public class StudentController {
     IStudentService service;
     @Resource
     IStudentService studentService;
+    @Autowired
+    ICompeService iCompeService;
 
     @GetMapping("info")
     ServerResponse info(String id) {
@@ -66,7 +71,7 @@ public class StudentController {
     ServerResponse information(String numId){
         return ServerResponse.success(studentService.information(numId));
     }
-    @PostMapping("logout")
+    @PostMapping("/logout")
     ServerResponse logout(HttpServletRequest request){
         return ServerResponse.success(studentService.logout(request));
     }
@@ -103,5 +108,9 @@ public class StudentController {
         if(service.changeTel(stuId, oldPassword, newTel))
             return ServerResponse.success(null,"电话修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败");
+    }
+    @PostMapping("/competitions")
+    ServerResponse competitions(){
+        return iCompeService.list();
     }
 }
