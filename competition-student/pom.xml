@@ -25,10 +25,7 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ysu.edu</groupId>
-            <artifactId>pojo</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -37,13 +34,10 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ysu.edu</groupId>
-            <artifactId>BaseConfig</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -52,6 +46,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ysu.edu</groupId>
+            <artifactId>pojo</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ysu.edu</groupId>
+            <artifactId>BaseConfig</artifactId>
         </dependency>
     </dependencies>
 </project>
