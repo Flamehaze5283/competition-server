@@ -1,20 +1,15 @@
 package ysu.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Competition;
 import ysu.edu.mapper.CompetitionMapper;
 import ysu.edu.service.ICompetitionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import ysu.edu.service.IUploadService;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -35,6 +30,9 @@ import java.util.List;
 public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Competition> implements ICompetitionService {
     @Resource
     IUploadService uploadService;
+
+    @Resource
+    ICompetitionService CompetitionService;
 
     @Override
     public boolean add(Competition competition) throws IOException {
@@ -87,13 +85,12 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         wrapper.in("id",list);
         return this.update(competition,wrapper);
     }
-    @Resource
-    ICompetitionService iCompetitionService;
+
     @Override
-    public List<Competition> competitions() {
+    public List<Competition> Competitions() {
         QueryWrapper wrapper = new QueryWrapper<>();
         wrapper.eq("active",1);
-        List<Competition> queryComp = iCompetitionService.list(wrapper);
+        List<Competition> queryComp = CompetitionService.list(wrapper);
         return queryComp;
     }
 }

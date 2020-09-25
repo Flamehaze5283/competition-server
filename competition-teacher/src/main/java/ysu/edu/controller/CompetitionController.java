@@ -1,17 +1,11 @@
 package ysu.edu.controller;
 
 
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-import ysu.edu.service.ICompetitionService;
-import ysu.edu.util.ServerResponse;
-
-import javax.annotation.Resource;
-import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Competition;
 import ysu.edu.service.ICompetitionService;
 import ysu.edu.util.ServerResponse;
@@ -65,10 +59,4 @@ public class CompetitionController {
         competition.setActive(1);
         return ServerResponse.success(competitionService.updateById(competition));
     }
-    @Resource
-    ICompetitionService iCompetitionService;
-     @PostMapping("/list")
-    ServerResponse list(){
-         return ServerResponse.success(iCompetitionService.competitions());
-     }
 }
