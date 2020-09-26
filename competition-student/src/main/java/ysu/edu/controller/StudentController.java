@@ -14,6 +14,7 @@ import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import ysu.edu.service.ICompeService;
 import ysu.edu.service.IStudentService;
+import ysu.edu.util.JWTUtil;
 import ysu.edu.util.ResponseState;
 import ysu.edu.util.ServerResponse;
 
@@ -42,13 +43,6 @@ public class StudentController {
     @GetMapping("info")
     ServerResponse info(String id) {
         return ServerResponse.success(service.getById(id));
-    }
-
-    @PostMapping("email-check")
-    ServerResponse emailCheck(Email email, Integer stuId) {
-        if(service.emailCheck(email, stuId))
-            return ServerResponse.success(null,"邮件发送成功");
-        else return ServerResponse.failed(ResponseState.FAILED, "邮件发送失败");
     }
 
     @PostMapping("update-photo")
@@ -82,6 +76,12 @@ public class StudentController {
             return ServerResponse.success(true,"密码正确");
         else return ServerResponse.failed(ResponseState.FAILED, "密码错误");
     }
+    @PostMapping("checkEmail")
+    ServerResponse checkEmail(Integer stuId, String type) {
+        if( service.checkEmail(stuId, type))
+            return ServerResponse.success(null,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
+        else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败");
+    }
 
     @PostMapping("changePassword")
     ServerResponse changePassword(Integer stuId, String oldPassword, String newPassword) {
@@ -89,12 +89,24 @@ public class StudentController {
             return ServerResponse.success(null,"密码修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "密码修改失败");
     }
+    @PostMapping("token-changePassword")
+    ServerResponse changePassword(String token, String newPassword) {
+        if(service.changePassword(token, newPassword))
+            return ServerResponse.success(null,"密码修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "密码修改失败，token已过期");
+    }
 
     @PostMapping("changeEmail")
     ServerResponse changeEmail(Integer stuId, String oldPassword, String newEmail) {
         if( service.changeEmail(stuId, oldPassword, newEmail))
-            return ServerResponse.success(newEmail,"邮件发送成功，请前往验证");
+            return ServerResponse.success(newEmail,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
         else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败");
+    }
+    @PostMapping("token-changeEmail")
+    ServerResponse changeEmail(String token, String newEmail) {
+        if(service.changeEmail(token, newEmail))
+            return ServerResponse.success(newEmail,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
+        else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败，token已过期");
     }
     @PostMapping("saveEmail")
     ServerResponse changeEmail(String emailToken) {
@@ -109,6 +121,13 @@ public class StudentController {
             return ServerResponse.success(null,"电话修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败");
     }
+    @PostMapping("token-changeTel")
+    ServerResponse changeTel(String token, String newTel) {
+        if(service.changeTel(token, newTel))
+            return ServerResponse.success(null,"电话修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败，token已过期");
+    }
+
     @PostMapping("/competitions")
     ServerResponse competitions(){
         return iCompeService.list();

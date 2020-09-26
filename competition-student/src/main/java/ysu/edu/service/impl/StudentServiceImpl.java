@@ -52,12 +52,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Resource
     IRedisService redisService;
 
-    @Override
-    public boolean emailCheck(Email email, Integer stuId) {
-        email.setText(getById(stuId).toString());
-        email.setSubject("id: " + stuId.toString());
-        return emailService.sendEmail(email);
-    }
 
     @Override
     public boolean updatePhoto(MultipartFile file, Integer stuId) {
@@ -116,6 +110,17 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         Student sqlStudent = getById(stuId);
         return password != null && bCryptPasswordEncoder.matches(password, sqlStudent.getPassword());
     }
+    @Override
+    public boolean checkEmail(Integer stuId, String type) {
+        Student student = getById(stuId);
+        student.setPassword("");
+        Email emailObj = new Email();
+        emailObj.setTo(student.getEmail());
+        emailObj.setSubject("燕山大学竞赛系统身份验证");
+        String url = "http://localhost/change?token=" + JWTUtil.emailToken(student) + "&type=" + type;
+        emailObj.setText(Email.a(url, url));
+        return emailService.sendEmail(emailObj);
+    }
 
     @Override
     public boolean changePassword(Integer stuId, String password, String newPassword) {
@@ -123,6 +128,16 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             Student student = new Student();
             student.setId(stuId);
             student.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            return updateById(student);
+        }
+        return false;
+    }
+    @Override
+    public boolean changePassword(String token, String newPassword) {
+        Student student = JWTUtil.emailToken(token);
+        if(student.getActive() != null && student.getActive() == 1) {
+            student.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            student.setActive(null);
             return updateById(student);
         }
         return false;
@@ -138,7 +153,21 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             Email email = new Email();
             email.setTo(newEmail);
             email.setSubject("燕山大学竞赛系统邮箱绑定验证");
-            String url = "http://localhost/verify-success?token=" + JWTUtil.emailToken(student);
+            String url = "http://localhost/change-success?token=" + JWTUtil.emailToken(student);
+            email.setText(Email.a(url, url));
+            return emailService.sendEmail(email);
+        }
+        return false;
+    }
+    @Override
+    public boolean changeEmail(String token, String newEmail) {
+        Student student = JWTUtil.emailToken(token);
+        if(student.getActive() != null && student.getActive() == 1) {
+            student.setEmail(newEmail);
+            Email email = new Email();
+            email.setTo(newEmail);
+            email.setSubject("燕山大学竞赛系统邮箱绑定验证");
+            String url = "http://localhost/change-success?token=" + JWTUtil.emailToken(student);
             email.setText(Email.a(url, url));
             return emailService.sendEmail(email);
         }
@@ -147,8 +176,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     @Override
     public boolean changeEmail(String token) {
         Student student = JWTUtil.emailToken(token);
-        if(checkPassword(student.getId(), student.getPassword())) {
+        if(student.getActive() != null && student.getActive() == 1 || checkPassword(student.getId(), student.getPassword())) {
             student.setPassword(null);
+            student.setActive(null);
             return updateById(student);
         }
         else return false;
@@ -165,7 +195,17 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return false;
     }
 
-
+    @Override
+    public boolean changeTel(String token, String newTel) {
+        Student student = JWTUtil.emailToken(token);
+        if(student.getActive() != null && student.getActive() == 1) {
+            student.setPassword(null);
+            student.setActive(null);
+            student.setTel(newTel);
+            return updateById(student);
+        }
+        return false;
+    }
 
     private  void write2SSDB(Student stu ,LocalDateTime now) throws JsonProcessingException {
         Map info = new HashMap<>();
@@ -187,7 +227,5 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         stu.setLastLogin(now);
         updateById(stu);
     }
-
-
 
 }

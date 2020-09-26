@@ -24,16 +24,17 @@ import java.util.List;
  */
 
 public interface IStudentService extends IService<Student> {
-    boolean emailCheck(Email email, Integer stuId);
     boolean updatePhoto(MultipartFile file, Integer stuId);
     String token(Student student) throws JsonProcessingException;
     Student information(String numId);
     boolean logout(HttpServletRequest request);
     boolean checkPassword(Integer stuId, String password);
+    boolean checkEmail(Integer stuId, String type);
     boolean changePassword(Integer stuId, String password, String newPassword);
     boolean changeEmail(Integer stuId, String password, String newEmail);
-
+    boolean changePassword(String token, String newPassword);
+    boolean changeEmail(String token, String newEmail);
     boolean changeEmail(String token);
-
     boolean changeTel(Integer stuId, String password, String newTel);
+    boolean changeTel(String token, String newTel);
 }
