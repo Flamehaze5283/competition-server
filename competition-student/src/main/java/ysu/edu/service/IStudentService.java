@@ -10,6 +10,7 @@ import ysu.edu.pojo.Competition;
 import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import com.baomidou.mybatisplus.extension.service.IService;
+import ysu.edu.util.ServerResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -30,11 +31,18 @@ public interface IStudentService extends IService<Student> {
     boolean logout(HttpServletRequest request);
     boolean checkPassword(Integer stuId, String password);
     boolean checkEmail(Integer stuId, String type);
+    String checkPhone(Integer stuId, String code);
     boolean changePassword(Integer stuId, String password, String newPassword);
+    boolean telChangePassword(String token, String newPassword);
     boolean changeEmail(Integer stuId, String password, String newEmail);
     boolean changePassword(String token, String newPassword);
     boolean changeEmail(String token, String newEmail);
-    boolean changeEmail(String token);
-    boolean changeTel(Integer stuId, String password, String newTel);
-    boolean changeTel(String token, String newTel);
+    boolean telChangeEmail(String token, String newEmail);
+    boolean saveEmail(String token);
+    boolean changeTel(Integer stuId, String password, String newTel, String code);
+    boolean changeTel(String token, String newTel, String code);
+    boolean telChangeTel(String token, String newTel, String code);
+    ServerResponse checkMessageCode(String tel, String code);
+    ServerResponse sendTextMessage(String tel);
+    ServerResponse sendTelMessage(String tel);
 }

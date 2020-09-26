@@ -3,14 +3,12 @@ package ysu.edu.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import ysu.edu.pojo.Email;
 import ysu.edu.pojo.Student;
 import ysu.edu.service.ICompeService;
 import ysu.edu.service.IStudentService;
@@ -82,6 +80,13 @@ public class StudentController {
             return ServerResponse.success(null,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
         else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败");
     }
+    @PostMapping("checkTel")
+    ServerResponse checkTel(Integer stuId, String verifyCode) {
+        String token = service.checkPhone(stuId, verifyCode);
+        if(token != null)
+            return ServerResponse.success(token);
+        return ServerResponse.failed(ResponseState.FAILED, "验证码不正确");
+    }
 
     @PostMapping("changePassword")
     ServerResponse changePassword(Integer stuId, String oldPassword, String newPassword) {
@@ -92,6 +97,12 @@ public class StudentController {
     @PostMapping("token-changePassword")
     ServerResponse changePassword(String token, String newPassword) {
         if(service.changePassword(token, newPassword))
+            return ServerResponse.success(null,"密码修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "密码修改失败，token已过期");
+    }
+    @PostMapping("tel-changePassword")
+    ServerResponse telChangePassword(String token, String newPassword) {
+        if(service.telChangePassword(token, newPassword))
             return ServerResponse.success(null,"密码修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "密码修改失败，token已过期");
     }
@@ -108,22 +119,34 @@ public class StudentController {
             return ServerResponse.success(newEmail,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
         else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败，token已过期");
     }
+    @PostMapping("tel-changeEmail")
+    ServerResponse telChangeEmail(String token, String newEmail) {
+        if(service.telChangeEmail(token, newEmail))
+            return ServerResponse.success(newEmail,"邮件发送成功，请在" + JWTUtil.ACTIVE_MINUTES + "分钟内前往验证");
+        else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败，token已过期");
+    }
     @PostMapping("saveEmail")
-    ServerResponse changeEmail(String emailToken) {
-        if(service.changeEmail(emailToken))
+    ServerResponse saveEmail(String emailToken) {
+        if(service.saveEmail(emailToken))
             return ServerResponse.success(null, "邮件修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "邮箱修改失败，邮件已经失效，请重新发送邮件");
     }
 
     @PostMapping("changeTel")
-    ServerResponse changeTel(Integer stuId, String oldPassword, String newTel) {
-        if(service.changeTel(stuId, oldPassword, newTel))
+    ServerResponse changeTel(Integer stuId, String oldPassword, String tel, String verifyCode) {
+        if(service.changeTel(stuId, oldPassword, tel, verifyCode))
             return ServerResponse.success(null,"电话修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败");
     }
     @PostMapping("token-changeTel")
-    ServerResponse changeTel(String token, String newTel) {
-        if(service.changeTel(token, newTel))
+    ServerResponse changeTel(String token, String tel, String verifyCode) {
+        if(service.changeTel(token, tel, verifyCode))
+            return ServerResponse.success(null,"电话修改成功");
+        else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败，token已过期");
+    }
+    @PostMapping("tel-changeTel")
+    ServerResponse telChangeTel(String token, String tel, String verifyCode) {
+        if(service.telChangeTel(token, tel, verifyCode))
             return ServerResponse.success(null,"电话修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败，token已过期");
     }
@@ -131,5 +154,20 @@ public class StudentController {
     @PostMapping("/competitions")
     ServerResponse competitions(){
         return iCompeService.list();
+    }
+
+    @RequestMapping("/check")
+    ServerResponse check(String tel, String verifyCode) {
+        return service.checkMessageCode(tel, verifyCode);
+    }
+
+    @RequestMapping("/send-tel-message")
+    ServerResponse send(String tel) {
+        return service.sendTelMessage(tel);
+    }
+
+    @RequestMapping("/send-text-message")
+    ServerResponse sendText(String tel) {
+        return service.sendTextMessage(tel);
     }
 }

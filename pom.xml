@@ -37,6 +37,8 @@
         <oss.version>3.10.2</oss.version>
         <swagger.version>2.9.2</swagger.version>
         <self.version>1.0-SNAPSHOT</self.version>
+        <httpclient.version>4.5.2</httpclient.version>
+        <httpcore.version>4.4.4</httpcore.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -143,6 +145,18 @@
                 <groupId>ysu.edu</groupId>
                 <artifactId>BaseConfig</artifactId>
                 <version>${self.version}</version>
+            </dependency>
+
+            <!-- 短信发送 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcore.version}</version>
             </dependency>
 
         </dependencies>
