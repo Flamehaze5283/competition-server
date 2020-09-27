@@ -37,7 +37,7 @@ public class Teacher extends BaseEntity {
     /**
      * 手机号
      */
-    private Integer mobilephone;
+    private String mobilephone;
 
     /**
      * 邮箱

@@ -3,15 +3,21 @@ package ysu.edu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.models.auth.In;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import ysu.edu.pojo.ConstantItem;
 import ysu.edu.mapper.ConstantItemMapper;
+import ysu.edu.pojo.ConstantType;
 import ysu.edu.service.IConstantItemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import ysu.edu.service.IConstantTypeService;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,6 +30,9 @@ import java.util.List;
  */
 @Service
 public class ConstantItemServiceImpl extends ServiceImpl<ConstantItemMapper, ConstantItem> implements IConstantItemService {
+    @Resource
+    IConstantTypeService constantTypeService;
+
     @Override
     public Object list(ConstantItem constantItem) {
         // 如果 有name传过来 就按照name 模糊查询
@@ -71,5 +80,28 @@ public class ConstantItemServiceImpl extends ServiceImpl<ConstantItemMapper, Con
         UpdateWrapper<ConstantItem> wrapper = new UpdateWrapper<>();
         wrapper.in("id",list);
         return this.update(constantItem,wrapper);
+    }
+
+    @Override
+    public Object getItems(String typeName) {
+        QueryWrapper<ConstantType> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", typeName);
+        ConstantType constantType = constantTypeService.getOne(wrapper);
+        if(ObjectUtils.isNotEmpty(constantType)) {
+            Integer typeId = constantType.getId();
+            QueryWrapper<ConstantItem> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("type_id", typeId);
+            wrapper1.eq("active", 1);
+            List<ConstantItem> itemList = this.list(wrapper1);
+            if(ObjectUtils.isEmpty(itemList)) {
+                return null;
+            }
+            else {
+                return itemList;
+            }
+        }
+        else {
+            return null;
+        }
     }
 }

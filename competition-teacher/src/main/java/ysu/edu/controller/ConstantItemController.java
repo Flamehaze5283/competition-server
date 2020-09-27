@@ -1,6 +1,7 @@
 package ysu.edu.controller;
 
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,17 @@ import javax.annotation.Resource;
 public class ConstantItemController {
     @Resource
     IConstantItemService constantItemService;
+
+    @GetMapping("/get-items")
+    ServerResponse getItems(String typeName) {
+        Object result = constantItemService.getItems(typeName);
+        if(ObjectUtils.isNotEmpty(result)) {
+            return ServerResponse.success(result);
+        }
+        else
+            return ServerResponse.failed("未找到该类别的常数项");
+    }
+
     @GetMapping("/list")
     ServerResponse list(ConstantItem constantItem) {
         return ServerResponse.success(constantItemService.list(constantItem));

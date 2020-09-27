@@ -15,4 +15,6 @@ public interface IConstantItemService extends IService<ConstantItem> {
     Object list(ConstantItem constantItem);
     boolean add(ConstantItem constantItem);
     boolean batchdel(Integer[] ids);
+
+    Object getItems(String typeName);
 }
