@@ -1,6 +1,7 @@
 package ysu.edu.controller;
 
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +30,20 @@ public class CompetitionController {
 
     @PostMapping("/save-competition")
     ServerResponse SaveCompetition(Competition competition) throws IOException {
-
         boolean result = competitionService.add(competition);
         if(result)
             return ServerResponse.success(null, "保存成功");
         else
             return ServerResponse.failed("保存失败");
+    }
+
+    @GetMapping("/getByName")
+    ServerResponse GetCompetition(String name) {
+        Competition competition = competitionService.getByName(name);
+        if(ObjectUtils.isEmpty(competition))
+            return ServerResponse.failed("未找到该竞赛相关信息");
+        else
+            return ServerResponse.success(competition);
     }
 
     @GetMapping("/list")

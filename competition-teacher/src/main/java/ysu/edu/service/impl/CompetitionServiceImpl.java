@@ -1,6 +1,7 @@
 package ysu.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.commons.lang3.ObjectUtils;
 import ysu.edu.pojo.Competition;
 import ysu.edu.mapper.CompetitionMapper;
 import ysu.edu.service.ICompetitionService;
@@ -36,11 +37,18 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
 
     @Override
     public boolean add(Competition competition) throws IOException {
-        String filePath = uploadService.upload(competition.getFileImage());
-        competition.setImage(filePath);
-        competition.setActive(1);
-        competition.setCreateTime(LocalDateTime.now());
-        return save(competition);
+        String name = competition.getName();
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", name);
+        if(ObjectUtils.isNotEmpty(this.getOne(wrapper)))
+            return false;
+        else {
+            String filePath = uploadService.upload(competition.getFileImage());
+            competition.setImage(filePath);
+            competition.setActive(1);
+            competition.setCreateTime(LocalDateTime.now());
+            return this.save(competition);
+        }
     }
 
     @Override
@@ -84,6 +92,13 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         UpdateWrapper<Competition> wrapper = new UpdateWrapper<>();
         wrapper.in("id",list);
         return this.update(competition,wrapper);
+    }
+
+    @Override
+    public Competition getByName(String name) {
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", name);
+        return this.getOne(wrapper);
     }
 
     @Override

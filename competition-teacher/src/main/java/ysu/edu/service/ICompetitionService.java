@@ -21,4 +21,6 @@ public interface ICompetitionService extends IService<Competition> {
     Object list(Competition competition);
     Object getById(Integer id);
     boolean batchdel(Integer[] ids);
+
+    Competition getByName(String name);
 }
