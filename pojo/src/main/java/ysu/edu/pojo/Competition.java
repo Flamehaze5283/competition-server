@@ -2,6 +2,7 @@ package ysu.edu.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.experimental.Accessors;
 import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.BaseEntity;
 

@@ -2,17 +2,26 @@ package ysu.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.ObjectUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Competition;
 import ysu.edu.mapper.CompetitionMapper;
 import ysu.edu.service.ICompetitionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import ysu.edu.service.IUploadService;
 
 import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.print.attribute.standard.Compression;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -55,8 +64,35 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
     public Object list(Competition competition) {
         // 如果 有name传过来 就按照name 模糊查询
         QueryWrapper<Competition> wrapper = new QueryWrapper<>();
-
         if(competition.getWithPage() == 1){
+            //筛选了竞赛级别和类型
+            if(StringUtils.isNotBlank(competition.getLevelName()) && StringUtils.isNotBlank(competition.getTypeName())){
+                if(StringUtils.isNotBlank(competition.getName())){
+                    wrapper.eq("l.name",competition.getLevelName()).eq("r.name",competition.getTypeName()).like("i.name",competition.getName());
+                }else{
+                    wrapper.eq("l.name",competition.getLevelName()).eq("r.name",competition.getTypeName());
+                }
+                return getBaseMapper().myGetPage(new Page<>(competition.getPageNo(),competition.getPageSize()), wrapper);
+            }
+            //筛选了竞赛级别
+            if(StringUtils.isNotBlank(competition.getLevelName())){
+                if(StringUtils.isNotBlank(competition.getName())){
+                    wrapper.eq("l.name",competition.getLevelName()).like("i.name",competition.getName());
+                }else{
+                    wrapper.eq("l.name",competition.getLevelName());
+                }
+                return getBaseMapper().myGetPage(new Page<>(competition.getPageNo(),competition.getPageSize()), wrapper);
+            }
+            //筛选了竞赛类型
+            if(StringUtils.isNotBlank(competition.getTypeName())){
+                if(StringUtils.isNotBlank(competition.getName())){
+                    wrapper.eq("r.name",competition.getTypeName()).like("i.name",competition.getName());
+                }else{
+                    wrapper.eq("r.name",competition.getTypeName());
+                }
+                return getBaseMapper().myGetPage(new Page<>(competition.getPageNo(),competition.getPageSize()), wrapper);
+            }
+            //直接查找比赛名称，指导教师名字
             if(StringUtils.isNotBlank(competition.getName())){
                 wrapper.like("name",competition.getName());
             }
@@ -73,7 +109,6 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
             }
             return getBaseMapper().noPage(wrapper);
         }
-
     }
 
     @Override
@@ -101,11 +136,4 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         return this.getOne(wrapper);
     }
 
-    @Override
-    public List<Competition> Competitions() {
-        QueryWrapper wrapper = new QueryWrapper<>();
-        wrapper.eq("active",1);
-        List<Competition> queryComp = CompetitionService.list(wrapper);
-        return queryComp;
-    }
 }

@@ -2,11 +2,14 @@ package ysu.edu.controller;
 
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.web.bind.annotation.RestController;
+import ysu.edu.service.ICompetitionService;
+import ysu.edu.util.ServerResponse;
+
+import javax.annotation.Resource;
+import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Competition;
 import ysu.edu.service.ICompetitionService;
 import ysu.edu.util.ServerResponse;
@@ -46,8 +49,8 @@ public class CompetitionController {
             return ServerResponse.success(competition);
     }
 
-    @GetMapping("/list")
-    ServerResponse list(Competition competition) {
+    @PostMapping("/list")
+    ServerResponse list( Competition competition) {
         return ServerResponse.success(competitionService.list(competition));
     }
     @GetMapping("/getById")

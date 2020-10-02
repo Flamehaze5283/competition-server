@@ -16,7 +16,6 @@ import java.util.List;
  * @since 2020-09-21
  */
 public interface ICompetitionService extends IService<Competition> {
-    List<Competition> Competitions();
     boolean add(Competition competition) throws IOException;
     Object list(Competition competition);
     Object getById(Integer id);
