@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISignService extends IService<Sign> {
     Object list(Sign sign);
+    Object selfList(Sign sign);
 }

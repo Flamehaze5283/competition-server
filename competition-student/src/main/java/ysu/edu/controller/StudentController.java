@@ -6,13 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ysu.edu.pojo.Competition;
-import ysu.edu.pojo.Email;
+import ysu.edu.pojo.Sign;
 import ysu.edu.pojo.Student;
 import ysu.edu.service.ICompeService;
 import ysu.edu.service.IStudentService;
@@ -153,6 +151,11 @@ public class StudentController {
         if(service.telChangeTel(token, tel, verifyCode))
             return ServerResponse.success(null,"电话修改成功");
         else return ServerResponse.failed(ResponseState.FAILED, "电话修改失败，token已过期");
+    }
+
+    @GetMapping("list-sign")
+    ServerResponse getSignList(Sign sign) {
+        return iCompeService.list(sign);
     }
 
     @PostMapping("/list")

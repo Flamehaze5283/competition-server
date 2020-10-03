@@ -75,4 +75,24 @@ public class Sign extends BaseEntity {
      * */
     @TableField(exist = false)
     private String verifyName;
+    /**
+     * 竞赛类型
+     */
+    @TableField(exist = false)
+    private Integer compType;
+    /**
+     * 竞赛类型名
+     */
+    @TableField(exist = false)
+    private String typeName;
+    /**
+     * 竞赛名称
+     */
+    @TableField(exist = false)
+    private String compName;
+    /**
+     * 队长姓名
+     */
+    @TableField(exist = false)
+    private String captainName;
 }

@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ysu.edu.mapper.SignMapper">
-
+    <select id="selfList" resultType="Sign">
+        select sign.id,
+        sign.competition_id,
+        sign.student_id student_id,
+        sign.captain_id,
+        sign.team_name,
+        sign.option_item,
+        sign.verify,
+        sign.active,
+        sign.create_time,
+        sign.update_time,
+        i1.name verify_name,
+        comp.type comp_type,
+        comp.name comp_name,
+        stu.name student_name,
+        cap.name captain_name,
+        i2.name type_name
+        from sign
+        left join constant_type t1 on t1.code = 'AUDITSTATUS'
+        left join constant_item i1 on i1.type_id = t1.id and i1.code = sign.verify
+        left join competition comp on comp.id = sign.competition_id
+        left join constant_type t2 on t2.code = 'COMPETITIONTYPE'
+        left join constant_item i2 on i2.type_id = t2.id and i2.code = comp.type
+        left join student cap on cap.id = sign.captain_id
+        left join student stu on concat(',', sign.student_id, ',') like concat('%,', stu.num_id, ',%')
+        ${ew.customSqlSegment}
+    </select>
 </mapper>
