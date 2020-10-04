@@ -1,6 +1,7 @@
 package ysu.edu.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,16 @@ public class ConstantItemController {
     @GetMapping("/get-items")
     ServerResponse getItems(String typeName) {
         Object result = constantItemService.getItems(typeName);
+        if(ObjectUtils.isNotEmpty(result)) {
+            return ServerResponse.success(result);
+        }
+        else
+            return ServerResponse.failed("未找到该类别的常数项");
+    }
+
+    @GetMapping("/get-parts")
+    ServerResponse getItems(String typeName, Integer type) throws JsonProcessingException {
+        Object result = constantItemService.getItems(typeName, type);
         if(ObjectUtils.isNotEmpty(result)) {
             return ServerResponse.success(result);
         }

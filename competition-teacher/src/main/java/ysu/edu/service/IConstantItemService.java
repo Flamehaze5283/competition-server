@@ -1,5 +1,6 @@
 package ysu.edu.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ysu.edu.pojo.ConstantItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +18,5 @@ public interface IConstantItemService extends IService<ConstantItem> {
     boolean batchdel(Integer[] ids);
 
     Object getItems(String typeName);
+    Object getItems(String typeName, Integer type) throws JsonProcessingException;
 }

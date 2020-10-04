@@ -1,6 +1,9 @@
 package ysu.edu.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,9 @@ import ysu.edu.util.ServerResponse;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +44,17 @@ public class CompetitionController {
             return ServerResponse.success(null, "保存成功");
         else
             return ServerResponse.failed("保存失败");
+    }
+
+    @PostMapping("/save-sign")
+    ServerResponse SaveSign(String parts, Integer id, String[] activeParams) throws JsonProcessingException {
+        List<String> params = new ArrayList<>(activeParams.length);
+        Collections.addAll(params, activeParams);
+        boolean result = competitionService.SaveSign(parts, id, params);
+        if(result)
+            return ServerResponse.success(null, "报名表保存成功");
+        else
+            return ServerResponse.failed("报名表保存失败");
     }
 
     @GetMapping("/getByName")

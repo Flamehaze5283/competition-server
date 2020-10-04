@@ -1,5 +1,6 @@
 package ysu.edu.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ysu.edu.pojo.Competition;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -22,4 +23,6 @@ public interface ICompetitionService extends IService<Competition> {
     boolean batchdel(Integer[] ids);
 
     Competition getByName(String name);
+
+    boolean SaveSign(String parts, Integer id, List<String> activeParams) throws JsonProcessingException;
 }

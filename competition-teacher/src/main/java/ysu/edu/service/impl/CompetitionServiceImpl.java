@@ -1,33 +1,29 @@
 package ysu.edu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.ObjectUtils;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+import ysu.edu.dto.SignFormDTO;
 import ysu.edu.pojo.Competition;
 import ysu.edu.mapper.CompetitionMapper;
 import ysu.edu.service.ICompetitionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
 import ysu.edu.service.IUploadService;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.Resource;
-import javax.print.attribute.standard.Compression;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 /**
  * <p>
  *  服务实现类
@@ -52,6 +48,8 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         if(ObjectUtils.isNotEmpty(this.getOne(wrapper)))
             return false;
         else {
+//            String filePath = "";
+//            if(ObjectUtils.isNotEmpty(competition.getFileImage()))
             String filePath = uploadService.upload(competition.getFileImage());
             competition.setImage(filePath);
             competition.setActive(1);
@@ -134,6 +132,19 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         QueryWrapper<Competition> wrapper = new QueryWrapper<>();
         wrapper.eq("name", name);
         return this.getOne(wrapper);
+    }
+
+    @Override
+    public boolean SaveSign(String parts, Integer id, List<String> activeParams) throws JsonProcessingException {
+        SignFormDTO formDTO = new SignFormDTO();
+        formDTO.setParts(parts);
+        formDTO.setActiveParams(activeParams);
+        ObjectMapper mapper = new ObjectMapper();
+        String optionList = mapper.writeValueAsString(formDTO);
+        Competition competition = new Competition();
+        competition.setId(id);
+        competition.setOptionList(optionList);
+        return this.updateById(competition);
     }
 
 }

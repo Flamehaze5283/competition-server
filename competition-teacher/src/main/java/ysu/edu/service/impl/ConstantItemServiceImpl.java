@@ -3,7 +3,9 @@ package ysu.edu.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.models.auth.In;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import ysu.edu.pojo.ConstantItem;
@@ -17,7 +19,6 @@ import ysu.edu.service.IConstantTypeService;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -98,6 +99,45 @@ public class ConstantItemServiceImpl extends ServiceImpl<ConstantItemMapper, Con
             }
             else {
                 return itemList;
+            }
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public Object getItems(String typeName, Integer type) throws JsonProcessingException {
+        QueryWrapper<ConstantType> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", typeName);
+        ConstantType constantType = constantTypeService.getOne(wrapper);
+        if(ObjectUtils.isNotEmpty(constantType)) {
+            Integer typeId = constantType.getId();
+            QueryWrapper<ConstantItem> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("type_id", typeId);
+            wrapper1.eq("active", 1);
+            List<ConstantItem> itemList = this.list(wrapper1);
+            if(ObjectUtils.isEmpty(itemList)) {
+                return null;
+            }
+            else {
+                List<ConstantItem> result = new ArrayList<>();
+                for(ConstantItem item : itemList) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    String code = item.getCode();
+                    JsonNode node = mapper.readValue(code, JsonNode.class);
+                    if(type == 1) {
+                        if(!node.get("value").toString().equals("\"团队赛\"")) {
+                            result.add(item);
+                        }
+                    }
+                    else {
+                        if(!node.get("value").toString().equals("\"个人赛\"")) {
+                            result.add(item);
+                        }
+                    }
+                }
+                return result;
             }
         }
         else {
