@@ -24,7 +24,7 @@
         left join competition comp on comp.id = sign.competition_id
         left join constant_type t2 on t2.code = 'COMPETITIONTYPE'
         left join constant_item i2 on i2.type_id = t2.id and i2.code = comp.type
-        left join student cap on cap.id = sign.captain_id
+        left join student cap on cap.num_id = sign.captain_id
         left join student stu on concat(',', sign.student_id, ',') like concat('%,', stu.num_id, ',%')
         ${ew.customSqlSegment}
     </select>

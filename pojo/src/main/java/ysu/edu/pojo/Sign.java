@@ -33,7 +33,7 @@ public class Sign extends BaseEntity {
     /**
      * 小队队长(个人项目填0)
      */
-    private Integer captainId;
+    private String captainId;
 
     /**
      * 队伍名称
