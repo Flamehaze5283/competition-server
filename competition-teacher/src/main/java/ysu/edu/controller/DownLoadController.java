@@ -44,9 +44,10 @@ public class DownLoadController {
         head.createCell(3).setCellValue("学生学号");
         head.createCell(4).setCellValue("是否过审");
 
+        int order = 1;
         for(Sign sign : list) {
             HSSFRow row = sheet.createRow(index++);
-            row.createCell(0).setCellValue(sign.getId());
+            row.createCell(0).setCellValue(order++);
             row.createCell(1).setCellValue(sign.getTeamName());
             row.createCell(2).setCellValue(sign.getStudentName());
             row.createCell(3).setCellValue(sign.getStudentId());
@@ -72,10 +73,10 @@ public class DownLoadController {
         head.createCell(2).setCellValue("队长");
         head.createCell(3).setCellValue("是否过审");
 
-
+        int order = 1;
         for(Sign sign : list) {
             HSSFRow row = sheet.createRow(index++);
-            row.createCell(0).setCellValue(sign.getId());
+            row.createCell(0).setCellValue(order++);
             row.createCell(1).setCellValue(sign.getTeamName());
             row.createCell(2).setCellValue(sign.getCaptainName());
             row.createCell(3).setCellValue(sign.getVerifyName());
