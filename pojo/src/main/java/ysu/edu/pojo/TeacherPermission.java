@@ -1,7 +1,10 @@
 package ysu.edu.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import ysu.edu.pojo.BaseEntity;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -49,5 +52,6 @@ public class TeacherPermission extends BaseEntity {
      */
     private LocalDateTime createTime;
 
-
+    @TableField(exist = false)
+    private List<TeacherPermission> children;
 }

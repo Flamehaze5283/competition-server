@@ -5,7 +5,7 @@ spring:
   application:
     name: email
   profiles:
-    active: discovery, email
+    active: discovery, email, redis
   cloud:
     nacos:
       config:

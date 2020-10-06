@@ -95,4 +95,10 @@ public class Sign extends BaseEntity {
      */
     @TableField(exist = false)
     private String captainName;
+
+    /**
+     * 成员学号
+     * */
+    @TableField(exist = false)
+    private String numId;
 }

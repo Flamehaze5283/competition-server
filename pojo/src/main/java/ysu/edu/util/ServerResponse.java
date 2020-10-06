@@ -42,6 +42,14 @@ public class ServerResponse {
         return new ServerResponse(ResponseState.NO_SESSION.getCode(),null,ResponseState.NO_SESSION.getMsg());
     }
 
+    public static ServerResponse noToken() {
+        return new ServerResponse(ResponseState.NO_SESSION.getCode(), null, ResponseState.NO_SESSION.getMsg());
+    }
+
+    public static ServerResponse noPermission() {
+        return new ServerResponse(ResponseState.NO_ACCESS.getCode(), null, ResponseState.NO_ACCESS.getMsg());
+    }
+
     public int getCode() {
         return code;
     }

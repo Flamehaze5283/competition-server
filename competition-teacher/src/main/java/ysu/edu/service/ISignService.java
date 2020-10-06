@@ -2,6 +2,7 @@ package ysu.edu.service;
 
 import ysu.edu.pojo.Sign;
 import com.baomidou.mybatisplus.extension.service.IService;
+import ysu.edu.util.TeamDTO;
 
 /**
  * <p>
@@ -14,4 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ISignService extends IService<Sign> {
     Object list(Sign sign);
     Object selfList(Sign sign);
+    Object teamList(Sign sign);
+    TeamDTO overList(Sign sign, String[] students);
+    Object getList(Sign sign);
 }

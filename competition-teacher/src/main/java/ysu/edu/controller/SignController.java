@@ -26,10 +26,22 @@ public class SignController {
     ServerResponse list(Sign sign) {
         return ServerResponse.success(signService.list(sign));
     }
+    @GetMapping("/getlist")
+    ServerResponse getList(Sign sign) {
+        return ServerResponse.success(signService.getList(sign));
+    }
     @PostMapping("/verify")
     ServerResponse doVerify(Sign sign) {
         sign.setVerify(1);
         return ServerResponse.success(signService.updateById(sign));
+    }
+    @GetMapping("/teamList")
+    ServerResponse teamList(Sign sign) {
+        return ServerResponse.success(signService.teamList(sign));
+    }
+    @PostMapping("/students")
+    ServerResponse students(Sign sign,String[] students){
+        return ServerResponse.success(signService.overList(sign,students));
     }
     @PostMapping("/badVerify")
     ServerResponse badVerify(Sign sign) {
@@ -40,5 +52,11 @@ public class SignController {
     @RequestMapping("/self-list")
     ServerResponse selfList(@RequestBody Sign sign) {
         return ServerResponse.success(signService.selfList(sign));
+    }
+
+    @PostMapping("/backVerify")
+    ServerResponse backVerify(Sign sign) {
+        sign.setVerify(0);
+        return ServerResponse.success(signService.updateById(sign));
     }
 }

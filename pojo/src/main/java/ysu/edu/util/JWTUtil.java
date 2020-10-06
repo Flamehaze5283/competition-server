@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import ysu.edu.pojo.Student;
+import ysu.edu.pojo.Teacher;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -12,6 +13,9 @@ import java.util.HashMap;
 
 public class JWTUtil {
     public static final String KEY = "student";
+    public static final String TEACHERKEY = "teacher";
+    public static final String SECURITY_KEY = "teacher_security";
+    public static final String PERMISSION_KEY = "teacherpermission";
     public static final Integer ACTIVE_MINUTES = 5;
     public static final Integer ACTIVE_TIME = ACTIVE_MINUTES * 60 * 1000;
 
@@ -23,6 +27,17 @@ public class JWTUtil {
                 .withClaim("name", student.getName())
                 .withClaim("timestamp", student.getLastLogin().toInstant(ZoneOffset.of("+8")).toEpochMilli())
                 .sign(Algorithm.HMAC256(KEY));
+    }
+
+    public static String create(Teacher teacher) {
+        return JWT.create()
+                .withClaim("email",teacher.getEmail())
+                .withClaim("password",teacher.getPassword())
+                .withClaim("id",teacher.getId())
+                .withClaim("realname",teacher.getRealname())
+
+                .withClaim("timestamp",teacher.getLastLogin().toInstant(ZoneOffset.of("+8")).toEpochMilli())
+                .sign(Algorithm.HMAC256(TEACHERKEY));
     }
     //student对象转换成email标记
     public static String emailToken(Student student) {
