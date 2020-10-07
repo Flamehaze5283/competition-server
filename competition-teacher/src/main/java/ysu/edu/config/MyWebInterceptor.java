@@ -39,10 +39,19 @@ public class MyWebInterceptor extends HandlerInterceptorAdapter {
         String method = request.getMethod();
         String token = request.getHeader("token");
 
+
+
         //1 如果没有token ，或者再ssdb中用户不存在， // NOTOKEN
         if(StringUtils.isBlank(token)){
             writeMsg(response, ServerResponse.noToken());
             return false;
+        }
+
+        //给学生端放行
+        String numId = JWT.decode(token).getClaim("numId").asString();
+        String student_key = JWTUtil.KEY +"-"+ numId;
+        if(redisService.hasKey(student_key)){
+            return true;
         }
 
         //2 获取ssdb中的 密码 跟 token中的密码是否一致，//NOTOKEN
