@@ -8,6 +8,7 @@ import ysu.edu.service.ISignService;
 import ysu.edu.util.ServerResponse;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -59,4 +60,20 @@ public class SignController {
         sign.setVerify(0);
         return ServerResponse.success(signService.updateById(sign));
     }
+
+    @PostMapping("/submit")
+    ServerResponse submit(String str,String active){
+        boolean flag = signService.submit(str,active);
+        if( flag){
+            return ServerResponse.success(null,"添加成功");
+        }else{
+            return ServerResponse.failed("添加失败");
+        }
+    }
+    @PostMapping("/detailSelf")
+    ServerResponse detailSelfList(Sign sign){
+        return ServerResponse.success(signService.detailSelfList(sign));
+    }
+
+
 }

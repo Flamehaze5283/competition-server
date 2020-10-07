@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import ysu.edu.pojo.Competition;
 import ysu.edu.pojo.Sign;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ysu.edu.pojo.Student;
 
 import java.util.List;
 
@@ -31,4 +32,7 @@ public interface SignMapper extends BaseMapper<Sign> {
     List<Sign> theTeam2List(@Param(Constants.WRAPPER) Wrapper wrapper);
 
     List<Sign> selfList(@Param(Constants.WRAPPER) Wrapper wrapper);
+
+    @Select("SELECT name FROM student ${ew.customSqlSegment}")
+    Student stuName(@Param(Constants.WRAPPER) Wrapper wrapper);
 }

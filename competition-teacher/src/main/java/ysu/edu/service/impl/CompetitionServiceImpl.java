@@ -147,4 +147,12 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         return this.updateById(competition);
     }
 
+    @Override
+    public String getOptionList (Integer id) {
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("id",id);
+        List<Competition> competition = this.list(wrapper);
+        return competition.get(0).getOptionList();
+    }
+
 }

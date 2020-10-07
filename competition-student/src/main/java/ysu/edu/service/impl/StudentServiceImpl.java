@@ -1,5 +1,6 @@
 package ysu.edu.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.auth0.jwt.JWT;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +23,7 @@ import ysu.edu.util.ServerResponse;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +88,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         return null;
     }
+
+
 
     @Override
     public Student information(String numId) {
@@ -275,6 +279,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     public ServerResponse sendTelMessage(String tel) {
         return emailService.sendMessage(tel);
     }
+
+
 
     private  void write2SSDB(Student stu ,LocalDateTime now) throws JsonProcessingException {
         Map info = new HashMap<>();

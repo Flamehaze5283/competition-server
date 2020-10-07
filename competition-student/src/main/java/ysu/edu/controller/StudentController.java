@@ -20,6 +20,7 @@ import ysu.edu.util.ServerResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -177,4 +178,6 @@ public class StudentController {
     ServerResponse sendText(String tel) {
         return service.sendTextMessage(tel);
     }
+
+
 }

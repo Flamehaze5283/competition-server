@@ -88,4 +88,8 @@ public class CompetitionController {
         competition.setActive(1);
         return ServerResponse.success(competitionService.updateById(competition));
     }
+    @PostMapping("/getOptionList")
+    ServerResponse getOptionList(Integer id){
+        return ServerResponse.success(competitionService.getOptionList(id));
+    }
 }
