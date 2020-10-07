@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.lang3.StringUtils;
-import ysu.edu.service.IUploadService;
+import ysu.edu.service.IImageUploadService;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -35,7 +35,7 @@ import java.util.Collections;
 @Service
 public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Competition> implements ICompetitionService {
     @Resource
-    IUploadService uploadService;
+    IImageUploadService uploadService;
 
     @Resource
     ICompetitionService CompetitionService;
@@ -50,7 +50,7 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         else {
 //            String filePath = "";
 //            if(ObjectUtils.isNotEmpty(competition.getFileImage()))
-            String filePath = uploadService.upload(competition.getFileImage());
+            String filePath = uploadService.uploadImage(competition.getFile()).getData().toString();
             competition.setImage(filePath);
             competition.setActive(1);
             competition.setCreateTime(LocalDateTime.now());

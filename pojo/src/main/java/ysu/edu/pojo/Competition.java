@@ -104,6 +104,6 @@ public class Competition extends BaseEntity {
     private String typeName;
 
     @TableField(exist = false)
-    private MultipartFile fileImage;
+    private MultipartFile file;
 
 }
