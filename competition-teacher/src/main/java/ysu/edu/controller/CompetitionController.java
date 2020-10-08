@@ -22,6 +22,7 @@ import ysu.edu.util.ServerResponse;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -116,6 +117,7 @@ public class CompetitionController {
     }
     @PostMapping("update-competition")
     ServerResponse updateCompetition(Competition competition) {
+        competition.setUpdateTime(LocalDateTime.now());
         boolean result = competitionService.saveOrUpdate(competition);
         if(result) {
             return ServerResponse.success(null, "修改成功！");
