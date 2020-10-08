@@ -20,6 +20,8 @@ import java.util.List;
 public interface ICompetitionService extends IService<Competition> {
     boolean add(Competition competition) throws IOException;
     Object list(Competition competition);
+    Object teacherPersonList(Competition competition ,Integer teacherId);
+    Object teacherTeamList(Competition competition ,Integer teacherId);
     Object getById(Integer id);
     boolean batchdel(Integer[] ids);
 
@@ -28,4 +30,6 @@ public interface ICompetitionService extends IService<Competition> {
     boolean SaveSign(String parts, Integer id, List<String> activeParams) throws JsonProcessingException;
 
     String getOptionList(Integer id);
+
+    Competition getCompetition(Integer id);
 }

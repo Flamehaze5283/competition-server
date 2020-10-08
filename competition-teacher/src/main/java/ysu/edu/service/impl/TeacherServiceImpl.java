@@ -54,7 +54,14 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             return this.page(new Page<>(teacher.getPageNo(),teacher.getPageSize()),wrapper);
         }
         else{
-            return this.list(wrapper);
+            List<Teacher> list = this.list(wrapper);
+            for(Teacher tch : list) {
+                if(tch.getTeacherId() == 100) {
+                    list.remove(tch);
+                    break;
+                }
+            }
+            return list;
         }
     }
 
@@ -159,6 +166,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         info.put("password",teacher.getPassword());
         info.put("realname",teacher.getRealname());
         info.put("id",teacher.getId());
+        info.put("teacher_id", teacher.getTeacherId());
         /*info.put("deptId",user.getDeptId());*/
         info.put("last_login",now.toInstant(ZoneOffset.of("+8")).toEpochMilli());
 

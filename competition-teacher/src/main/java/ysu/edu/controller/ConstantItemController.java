@@ -85,4 +85,9 @@ public class ConstantItemController {
         constantItem.setActive(1);
         return ServerResponse.success(constantItemService.updateById(constantItem));
     }
+
+    @GetMapping("/getName")
+    ServerResponse getName(String type, Integer code) {
+        return ServerResponse.success(constantItemService.getName(type, code));
+    }
 }

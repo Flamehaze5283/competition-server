@@ -19,4 +19,6 @@ public interface IConstantItemService extends IService<ConstantItem> {
 
     Object getItems(String typeName);
     Object getItems(String typeName, Integer type) throws JsonProcessingException;
+
+    String getName(String type, Integer code);
 }

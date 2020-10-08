@@ -34,6 +34,7 @@ public class JWTUtil {
                 .withClaim("email",teacher.getEmail())
                 .withClaim("password",teacher.getPassword())
                 .withClaim("id",teacher.getId())
+                .withClaim("teacher_id", teacher.getTeacherId())
                 .withClaim("realname",teacher.getRealname())
 
                 .withClaim("timestamp",teacher.getLastLogin().toInstant(ZoneOffset.of("+8")).toEpochMilli())

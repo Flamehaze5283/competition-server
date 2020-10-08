@@ -34,8 +34,6 @@ import java.util.Collections;
  */
 @Service
 public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Competition> implements ICompetitionService {
-    @Resource
-    IImageUploadService uploadService;
 
     @Resource
     ICompetitionService CompetitionService;
@@ -48,10 +46,6 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         if(ObjectUtils.isNotEmpty(this.getOne(wrapper)))
             return false;
         else {
-//            String filePath = "";
-//            if(ObjectUtils.isNotEmpty(competition.getFileImage()))
-            String filePath = uploadService.uploadImage(competition.getFile()).getData().toString();
-            competition.setImage(filePath);
             competition.setActive(1);
             competition.setCreateTime(LocalDateTime.now());
             return this.save(competition);
@@ -153,6 +147,56 @@ public class CompetitionServiceImpl extends ServiceImpl<CompetitionMapper, Compe
         wrapper.eq("id",id);
         List<Competition> competition = this.list(wrapper);
         return competition.get(0).getOptionList();
+    }
+
+    @Override
+    public Competition getCompetition(Integer id) {
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id);
+        return this.getOne(wrapper);
+    }
+
+    @Override
+    public Object teacherPersonList(Competition competition, Integer teacherId) {
+
+        // 如果 有name传过来 就按照name 模糊查询
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("type",1);
+        if(teacherId != -1){
+            wrapper.eq("i.`teacher_id`",teacherId);
+        }
+        if(competition.getWithPage() == 1){
+            if(StringUtils.isNotBlank(competition.getName())){
+                wrapper.like("name",competition.getName());
+            }
+            return getBaseMapper().list(new Page<>(competition.getPageNo(),competition.getPageSize()), wrapper);
+        } else {
+            if(StringUtils.isNotBlank(competition.getName())){
+                wrapper.like("name",competition.getName());
+            }
+            return getBaseMapper().noPage(wrapper);
+        }
+    }
+
+    @Override
+    public Object teacherTeamList(Competition competition, Integer teacherId) {
+        // 如果 有name传过来 就按照name 模糊查询
+        QueryWrapper<Competition> wrapper = new QueryWrapper<>();
+        wrapper.eq("type",2);
+        if(teacherId != -1){
+            wrapper.eq("i.`teacher_id`",teacherId);
+        }
+        if(competition.getWithPage() == 1){
+            if(StringUtils.isNotBlank(competition.getName())){
+                wrapper.like("name",competition.getName());
+            }
+            return getBaseMapper().list(new Page<>(competition.getPageNo(),competition.getPageSize()), wrapper);
+        } else {
+            if(StringUtils.isNotBlank(competition.getName())){
+                wrapper.like("name",competition.getName());
+            }
+            return getBaseMapper().noPage(wrapper);
+        }
     }
 
 }

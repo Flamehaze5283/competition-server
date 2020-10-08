@@ -144,4 +144,15 @@ public class ConstantItemServiceImpl extends ServiceImpl<ConstantItemMapper, Con
             return null;
         }
     }
+
+    @Override
+    public String getName(String type, Integer code) {
+        QueryWrapper<ConstantType> wrapper = new QueryWrapper<>();
+        wrapper.eq("name", type);
+        ConstantType constantType = constantTypeService.getOne(wrapper);
+        QueryWrapper<ConstantItem> wrapper1 = new QueryWrapper<>();
+        wrapper1.eq("code", code);
+        wrapper1.eq("type_id", constantType.getId());
+        return this.getOne(wrapper1).getName();
+    }
 }
