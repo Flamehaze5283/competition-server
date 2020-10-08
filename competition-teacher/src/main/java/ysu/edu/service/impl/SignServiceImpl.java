@@ -43,7 +43,7 @@ public class SignServiceImpl extends ServiceImpl<SignMapper, Sign> implements IS
     public Object getList(Sign sign) {
         QueryWrapper<Sign> wrapper = new QueryWrapper<>();
         wrapper.eq("competition_id",sign.getCompetitionId());
-        return getBaseMapper().list(wrapper);
+        return getBaseMapper().getList(wrapper);
     }
 
     @Override
