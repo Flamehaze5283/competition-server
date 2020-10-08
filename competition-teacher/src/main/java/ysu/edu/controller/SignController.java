@@ -51,7 +51,7 @@ public class SignController {
     }
 
     @RequestMapping("/self-list")
-    ServerResponse selfList(@RequestBody Sign sign) {
+    ServerResponse selfList(Sign sign) {
         return ServerResponse.success(signService.selfList(sign));
     }
 
