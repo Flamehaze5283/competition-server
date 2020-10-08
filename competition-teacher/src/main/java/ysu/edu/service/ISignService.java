@@ -22,4 +22,6 @@ public interface ISignService extends IService<Sign> {
     Object getList(Sign sign);
     boolean submit(String str,String active);
     Object detailSelfList(Sign sign);
+
+    boolean cancel(Sign sign);
 }

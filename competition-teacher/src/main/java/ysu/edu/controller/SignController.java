@@ -75,5 +75,10 @@ public class SignController {
         return ServerResponse.success(signService.detailSelfList(sign));
     }
 
-
+    @PostMapping("/cancel")
+    ServerResponse cancel(Sign sign) {
+        if(signService.cancel(sign))
+            return ServerResponse.success(null, "已撤销报名");
+        return ServerResponse.failed("撤销失败");
+    }
 }

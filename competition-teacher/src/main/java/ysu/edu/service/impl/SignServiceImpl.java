@@ -199,4 +199,15 @@ public class SignServiceImpl extends ServiceImpl<SignMapper, Sign> implements IS
         wrapper.eq("competition_id",sign.getCompetitionId());
         return getBaseMapper().theTeamList(wrapper);
     }
+
+    @Override
+    public boolean cancel(Sign sign) {
+        if(sign.getActive() == 1 && sign.getVerify() == 0) {
+            Sign usign = new Sign();
+            usign.setId(sign.getId());
+            usign.setActive(0);
+            return updateById(usign);
+        }
+        return false;
+    }
 }
