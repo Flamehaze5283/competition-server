@@ -4,7 +4,7 @@ spring:
   application:
     name: teacher
   profiles:
-    active: discovery, datasource, mybatis, ribbon, redis, fastdfs, request-limit
+    active: discovery, datasource, mybatis, ribbon, redis, request-limit, toni
   cloud:
     nacos:
       config:

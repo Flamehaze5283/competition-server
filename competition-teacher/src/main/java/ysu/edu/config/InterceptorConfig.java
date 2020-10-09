@@ -36,7 +36,10 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/teacher/token",
-                        "/teacher/logout"
+                        "/teacher/logout",
+                        "/teacher/rePassword",
+                        "/download/person",
+                        "/download/team"
                 );
     }
     @Override

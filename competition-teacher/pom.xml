@@ -11,6 +11,14 @@
 
     <artifactId>competition-teacher</artifactId>
     <packaging>jar</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -48,11 +56,6 @@
         <dependency>
             <groupId>ysu.edu</groupId>
             <artifactId>BaseConfig</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ysu.edu</groupId>
-            <artifactId>ImgServer</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

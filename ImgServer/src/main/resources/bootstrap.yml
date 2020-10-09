@@ -5,7 +5,7 @@ spring:
   application:
     name: upload
   profiles:
-    active: discovery, fastdfs, request-limit
+    active: discovery, fastdfs, request-limit, towen
   cloud:
     nacos:
       config:

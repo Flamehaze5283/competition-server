@@ -39,19 +39,19 @@ public class DownLoadController {
         HSSFSheet sheet = workbook.createSheet("sheet");
         HSSFRow head = sheet.createRow(index++);
         head.createCell(0).setCellValue("编号");
-        head.createCell(1).setCellValue("队伍名称");
-        head.createCell(2).setCellValue("学生姓名");
-        head.createCell(3).setCellValue("学生学号");
-        head.createCell(4).setCellValue("是否过审");
+//        head.createCell(1).setCellValue("队伍名称");
+        head.createCell(1).setCellValue("学生姓名");
+        head.createCell(2).setCellValue("学生学号");
+        head.createCell(3).setCellValue("是否过审");
 
         int order = 1;
         for(Sign sign : list) {
             HSSFRow row = sheet.createRow(index++);
             row.createCell(0).setCellValue(order++);
-            row.createCell(1).setCellValue(sign.getTeamName());
-            row.createCell(2).setCellValue(sign.getStudentName());
-            row.createCell(3).setCellValue(sign.getStudentId());
-            row.createCell(4).setCellValue(sign.getVerifyName());
+//            row.createCell(1).setCellValue(sign.getTeamName());
+            row.createCell(1).setCellValue(sign.getStudentName());
+            row.createCell(2).setCellValue(sign.getStudentId());
+            row.createCell(3).setCellValue(sign.getVerifyName());
             //row.createCell(5).setCellValue(sign.getLastlogin()==null ? "" : admin.getLastlogin().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         }
         workbook.write(response.getOutputStream());
