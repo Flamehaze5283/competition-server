@@ -46,17 +46,18 @@ public class UploadServiceImpl implements IUploadService {
 
     @Override
     public String uploadOss(MultipartFile file) throws IOException {
-        String endpoint = "http://oss-cn-beijing.aliyuncs.com";
-        String accessKeyId = "LTAI4G98jLLEDWsCKXZvjinU";
-        String accessKeySecret = "L42rCB1iZTt6bf8pIp2lZT2ScTWOLO";
-        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+//         String endpoint = "http://oss-cn-beijing.aliyuncs.com";
+//         String accessKeyId = "";
+//         String accessKeySecret = "";
+//         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
-        String originalFileName = file.getOriginalFilename();
-        String exName = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String newFileName = UUID.randomUUID().toString() + exName;
+//         String originalFileName = file.getOriginalFilename();
+//         String exName = originalFileName.substring(originalFileName.lastIndexOf("."));
+//         String newFileName = UUID.randomUUID().toString() + exName;
 
-        ossClient.putObject("halation-oss", newFileName, file.getInputStream());
-        ossClient.shutdown();
+//         ossClient.putObject("halation-oss", newFileName, file.getInputStream());
+//         ossClient.shutdown();
+        String newFileName = null;
         return "https://halation-oss.oss-cn-beijing.aliyuncs.com/" + newFileName;
     }
 }
